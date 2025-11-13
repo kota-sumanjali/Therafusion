@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator's Webpage</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            max-width: 100px;
+            margin-right: 10px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .filter {
+            margin-bottom: 20px;
+        }
+
+        .filter select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .doctor-dropdown,
+        .supervisor-dropdown,
+        .status-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .doctor-dropdown a,
+        .supervisor-dropdown a,
+        .status-dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .doctor-dropdown a:hover,
+        .supervisor-dropdown a:hover,
+        .status-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .doctor-dropdown,
+        .dropdown:hover .supervisor-dropdown,
+        .status-cell:hover .status-dropdown {
+            display: block;
+        }
+
+        .status-cell {
+            position: relative;
+            display: inline-block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <img src="logo.png" alt="Therafusion Logo" class="logo">
+            <h1>Therapy Administration System</h1>
+        </div>
+    </header>
+
+    <main>
+        <section id="dashboard">
+            <h2>Dashboard</h2>
+            <div class="stats">
+                <div class="stat">
+                    <h3>Total Patients</h3>
+                    <p>20</p>
+                </div>
+                <div class="stat">
+                    <h3>Total Therapists</h3>
+                    <p>4</p>
+                </div>
+                <div class="stat">
+                    <h3>Supervisors</h3>
+                    <p>3</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="patients">
+            <h2>Patients</h2>
+            <div class="filter">
+                <label for="allocationFilter">Filter by Allocation:</label>
+                <select id="allocationFilter" onchange="filterPatients()">
+                    <option value="all">All Patients</option>
+                    <option value="allocated">Allocated Patients</option>
+                    <option value="notAllocated">Not Allocated Patients</option>
+                </select>
+                <label for="statusFilter">Filter by Status:</label>
+                <select id="statusFilter" onchange="filterPatients()">
+                    <option value="all">All Statuses</option>
+                    <option value="ongoing">Ongoing</option>
+                    <option value="completed">Completed</option>
+                    <option value="discontinued">Discontinued</option>
+                </select>
+            </div>
+            <table id="patientsTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>City</th>
+                        <th>Therapist</th>
+                        <th>Supervisor</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-allocated="true" data-status="ongoing">
+                        <td>John Smith</td>
+                        <td>35</td>
+                        <td>New York</td>
+                        <td>Dr. John Doe</td>
+                        <td>Supervisor A</td>
+                        <td class="status-cell">
+                            <span ondblclick="showStatusDropdown(this)">Ongoing</span>
+                            <div class="status-dropdown">
+                                <a href="#" onclick="updateStatus(this, 'Completed')">Completed</a>
+                                <a href="#" onclick="updateStatus(this, 'Discontinued')">Discontinued</a>
+                                <a href="#" onclick="updateStatus(this, 'Ongoing')">Ongoing</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-allocated="false" data-status="ongoing">
+                        <td>Jane Doe</td>
+                        <td>42</td>
+                        <td>Los Angeles</td>
+                        <td>
+                            <div class="dropdown" id="therapistdropdown">
+                                <button class="dropbtn">Allocate Therapist</button>
+                                <div class="doctor-dropdown">
+                                    <a href="#" onclick="allocateDoctor(this, 'Jane Doe', 'Dr. John Doe')">Dr. John
+                                        Doe</a>
+                                    <a href="#" onclick="allocateDoctor(this, 'Jane Doe', 'Dr. Jane Smith')">Dr. Jane
+                                        Smith</a>
+                                    <a href="#" onclick="allocateDoctor(this, 'Jane Doe', 'Dr. Michael Johnson')">Dr.
+                                        Michael Johnson</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="dropbtn">Allocate Supervisor</button>
+                                <div class="supervisor-dropdown">
+                                    <a href="#"
+                                        onclick="allocateSupervisor(this, 'Jane Doe', 'Supervisor A')">Supervisor A</a>
+                                    <a href="#"
+                                        onclick="allocateSupervisor(this, 'Jane Doe', 'Supervisor B')">Supervisor B</a>
+                                    <a href="#"
+                                        onclick="allocateSupervisor(this, 'Jane Doe', 'Supervisor C')">Supervisor C</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="status-cell">
+                            <span ondblclick="showStatusDropdown(this)">Ongoing</span>
+                            <div class="status-dropdown">
+                                <a href="#" onclick="updateStatus(this, 'Completed')">Completed</a>
+                                <a href="#" onclick="updateStatus(this, 'Discontinued')">Discontinued</a>
+                                <a href="#" onclick="updateStatus(this, 'Ongoing')">Ongoing</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Add more patient rows -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Therafusion System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        window.onload = loadPatients();
+
+
+        async function fetchDoctors(doctorRole) {
+            var apiUrl = 'http://localhost:3000/users?role=Therapist';
+            if (doctorRole == 'superviser')
+                apiUrl = 'http://localhost:3000/users?role=Superviser';
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return await response.json(); // Return the therapist data
+            } catch (error) {
+                console.error('Error fetching therapists:', error);
+                return []; // Return an empty array in case of error
+            }
+        }
+
+        async function loadPatients() {
+            const usersApi = 'http://localhost:3000/users?role=Patient';
+
+            const therapists = await fetchDoctors('therapist');
+            const supervisers = await fetchDoctors('superviser');
+
+            resp = await fetch('http://localhost:3000/cases?patientName=' + patientUserName);
+            data1 = await resp.json();
+            alert(data1.length);
+            var therapistName;
+            if (data1.length > 0) {
+             data1.forEach(caserec => {
+                    therapistName = caserec.therapistName;
+                });
+            }
+
+                fetch(usersApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.querySelector('#patientsTable tbody');
+                        tableBody.innerHTML = '';
+                        data.forEach(patient => {
+                            const row = document.createElement('tr');
+                            row.setAttribute('data-allocated', 'false');
+                            row.setAttribute('data-status', 'ongoing');
+
+                            const therapistOptions = therapists.map(therapist => `
+                <a href="#" onclick="allocateDoctor(this, '${patient.username}', '${therapist.username}', '${therapist.name}')">${therapist.name}</a>
+            `).join('');
+                            const superviserOptions = supervisers.map(superviser => `
+                <a href="#" onclick="allocateSuperviser(this, '${patient.username}', '${superviser.username}', '${superviser.name}')">${superviser.name}</a>
+            `).join('');
+
+                            row.innerHTML = `
+                <td>${patient.name}</td>
+                <td>45</td>
+                <td>Hyderabad</td>`
+                if(therapistName){
+                    `<td>${therapistName}</td>`
+                }else{
+                    `<td>
+                    <div class="dropdown" id="therapistdropdown">
+                        <button class="dropbtn">Allocate Therapist</button>
+                        <div class="doctor-dropdown">
+                            ${therapistOptions}
+                        </div>
+                    </div>
+                </td>`
+                }
+
+                
+
+                `<td>
+                    <div class="dropdown" id="superviserdropdown">
+                        <button class="dropbtn">Allocate Supervisor</button>
+                        <div class="supervisor-dropdown">
+                            ${superviserOptions}
+                        </div>
+                    </div>
+                </td>
+
+                <td class="status-cell">
+                    <span ondblclick="showStatusDropdown(this)">Ongoing</span>
+                    <div class="status-dropdown">
+                        <a href="#" onclick="updateStatus(this, 'Completed')">Completed</a>
+                        <a href="#" onclick="updateStatus(this, 'Discontinued')">Discontinued</a>
+                        <a href="#" onclick="updateStatus(this, 'Ongoing')">Ongoing</a>
+                    </div>
+                </td>
+            `;
+
+                            tableBody.appendChild(row);
+
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+
+                    });
+
+            }
+
+            async function allocateDoctor(element, patientUserName, doctorUserName, doctorName) {
+                const row = element.closest('tr');
+                row.querySelector('td:nth-child(4)').innerText = doctorName; // Update the Doctor cell
+                row.setAttribute('data-allocated', 'true'); // Mark as allocated
+                const dropdown = row.querySelector('.doctor-dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'none'; // Hide the dropdown
+                }
+                const data = {
+                    "patientName": patientUserName,
+                    "therapistName": doctorUserName,
+
+                };
+                var methodType = 'POST';
+                var caseApi = 'http://localhost:3000/cases';
+                try {
+                    resp = await fetch('http://localhost:3000/cases?patientName=' + patientUserName);
+                    data1 = await resp.json();
+                    alert(data1.length);
+                    var caseId;
+                    if (data1.length > 0) {
+                        methodType = 'PUT';
+                        data1.forEach(caserec => {
+                            caseId = caserec.id;
+                        });
+
+                        caseApi = 'http://localhost:3000/cases/' + caseId;
+                        alert(caseApi);
+                    }
+
+
+                } catch (error) {
+                    console.error('Error fetching therapists:', error);
+
+                }
+
+
+                alert(methodType);
+                fetch(caseApi, {
+                    method: methodType,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .catch((error) => {
+                        console.error('Error:', error);
+
+                    });
+
+                alert('Allocated ' + doctorName + ' to ' + patientUserName);
+            }
+
+            function allocateSuperviser(element, patientUserName, supervisorUserName, supervisorName) {
+                const row = element.closest('tr');
+                row.querySelector('td:nth-child(5)').innerText = supervisorName; // Update the Supervisor cell
+                row.setAttribute('data-allocated', 'true'); // Mark as allocated
+                const dropdown = row.querySelector('.supervisor-dropdown');
+                if (dropdown) {
+                    dropdown.style.display = 'none'; // Hide the dropdown
+                }
+                alert('Allocated ' + supervisorName + ' to ' + patientName);
+            }
+
+            function filterPatients() {
+                const allocationFilterValue = document.getElementById('allocationFilter').value;
+                const statusFilterValue = document.getElementById('statusFilter').value;
+                const rows = document.querySelectorAll('#patientsTable tbody tr');
+
+                rows.forEach(row => {
+                    const isAllocated = row.getAttribute('data-allocated') === 'true';
+                    const status = row.getAttribute('data-status');
+                    let shouldShow = true;
+
+                    // Check allocation filter
+                    if (allocationFilterValue !== 'all' && ((allocationFilterValue === 'allocated' && !isAllocated) || (allocationFilterValue === 'notAllocated' && isAllocated))) {
+                        shouldShow = false;
+                    }
+
+                    // Check status filter
+                    if (statusFilterValue !== 'all' && statusFilterValue !== status) {
+                        shouldShow = false;
+                    }
+
+                    row.style.display = shouldShow ? '' : 'none';
+                });
+            }
+
+            function showStatusDropdown(element) {
+                const statusCell = element.closest('.status-cell');
+                statusCell.querySelector('.status-dropdown').style.display = 'block';
+            }
+
+            function updateStatus(element, status) {
+                const statusCell = element.closest('.status-cell');
+                const row = statusCell.closest('tr');
+                statusCell.querySelector('span').textContent = status; // Update the status text
+                row.setAttribute('data-status', status.toLowerCase()); // Update the data-status attribute
+                statusCell.querySelector('.status-dropdown').style.display = 'none'; // Hide dropdown
+                alert('Status updated to: ' + status);
+            }
+    </script>
+</body>
+
+</html>

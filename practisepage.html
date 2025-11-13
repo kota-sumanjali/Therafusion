@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therafusion</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 50px; /* Adjust the logo size */
+            margin-right: 10px;
+        }
+
+        h1 {
+            color: #4CAF50; /* Main title color */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        h2 {
+            color: #555; /* Subtitle color */
+            font-size: 18px;
+            margin: 10px 0 0;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .button-container > div {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .round-button {
+            background-color: #4CAF50; /* Button color */
+            color: white;
+            border: none;
+            border-radius: 50%; /* Round shape */
+            width: 120px; /* Button size */
+            height: 120px; /* Button size */
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            outline: none;
+        }
+
+        .round-button:hover {
+            background-color: #45a049; /* Darker shade on hover */
+            transform: translateY(-2px); /* Lift effect */
+        }
+
+        .round-button:active {
+            transform: translateY(1px); /* Press effect */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .button-container > div {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="Logo" class="logo"> <!-- Replace with your logo URL -->
+        <div>
+            <h1>Therafusion</h1>
+            <h2>Practice Now</h2>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <div>
+            <button class="round-button" onclick = "location.href = 'pronunciation.html'">Pronunciation Exercises</button>
+            <button class="round-button" onclick = "location.href = 'Breathing.html'">Breathing Exercises</button>
+            <button class="round-button" onclick = "location.href = 'blowing.html'">Blowing Exercises</button>
+        </div>
+        <div>
+            <button class="round-button"onclick = "location.href = 'sentenceform.html'">Sentence formation</button>
+            <button class="round-button">Oral motar Exercises</button>
+            <button class="round-button" onclick = "location.href = 'story.html'">Story Telling</button> 
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="patient.html" class="back-button">Back to Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheraFusion - Blowing Exercises</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure full height for flex layout */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .logo {
+            margin-right: 15px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: auto;
+        }
+
+        .header-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .main-title {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 2em;
+            color: #333;
+        }
+
+        .exercise-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            flex-grow: 1; /* Allow gallery to grow and take available space */
+        }
+
+        .exercise-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .exercise-item img {
+            max-width: 60%; /* Reduced the image size */
+            height: auto;
+            border-radius: 5px;
+            margin: 0 auto; /* Centers the image within the container */
+        }
+
+        .exercise-title {
+            font-size: 1.2em;
+            margin: 10px 0 5px;
+            color: #4CAF50;
+        }
+
+        .exercise-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 16px; /* Smaller padding for a smaller button */
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 20px auto; /* Center the button with margin */
+            text-align: center; /* Center text inside the button */
+        }
+
+        .back-button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+
+        /* Centering the button container */
+        .button-container {
+            display: flex;
+            justify-content: center; /* Center the button horizontally */
+            margin: 20px 0; /* Add vertical spacing */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="TheraFusion Logo">
+        </div>
+        <h1 class="header-title">TheraFusion</h1>
+    </header>
+    
+    <main>
+        <h2 class="main-title">Blowing Exercises</h2>
+
+        <div class="exercise-gallery">
+            <div class="exercise-item">
+                <img src="https://www.shutterstock.com/image-photo/little-girl-enjoying-game-playdough-600nw-1714015468.jpg" alt="Exercise 1">
+                <h3 class="exercise-title">Exercise 1</h3>
+                <p class="exercise-description">Take a ball place it on the table, and make the ball move by blowing it with a straw.</p>
+            </div>
+            <div class="exercise-item">
+                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhAWFRUXGBUVFRUXFhUVFRUVFRUWFhYVFhYYHSggGBolGxUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi4mICUrLS0vKy0tLSstLSsuLS0tLS0tLS0tNy0tLS0tLSstLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAbAAABBQEBAAAAAAAAAAAAAAACAAEEBQYDB//EAEUQAAEDAgMFBQYCBAwHAAAAAAEAAhEDIQQSMQVBUWFxBhMigZEyobHB0fBCUhRicvEHFSMzNIKSorKzwuEWJENTY3OD/8QAGgEBAAMBAQEAAAAAAAAAAAAAAAECAwQFBv/EADIRAAICAQQAAwUHBAMAAAAAAAABAgMRBBIhMQVBURNxobHBIjJhgZHR8CMzUuEGFBX/2gAMAwEAAhEDEQA/AJqcBMiaugkcBOkkhA4TpkQQkQSTwmrup02h9Wo1gPO+sSZsPiobwMCShZvH9qRmcylTiCPGXsdbjrBHTkoP/E9a4sfIcxHWyrvRbazYpism3tXVAk0mvHIlp+JhTMF2uoPtUDqR4mHN/tC/qFbciMF+mIQ0qjXAOa4OB0IIIPmEakqcyhKNyEhAAUJCMoYUABMURTIAUJCMpiEBzKYhGQhKEgFCjIQkIBkk6SAZMiTIBoSATpISNCdJOgHSSSQksUTUARBSUDSTBOhI654hr8riy2UZnGJ8INwL6kSAd2u5E4nco209tUsMWuZlc4teM8OloENkC3judY9rlCpKWCUh2sdhqDu+ObEvPhBdmyZvZbBlgAmN8gHWDOF2xi2Fzs9TPVcTn7sOFOZ0bJvfefIKPice6qQQXtc0EF3sF0biXSS6OfRHgmACzfmfjJVEi+SNQw+9sj4QfJSv0bS9wuoqt0J9Ry6IX2tx0+itggjimD+4wuVeiT7Ou6fgurDwGmnyROaTy19QJj74KMk4I2yNo1cNUzMJj8dOfA8cxx4HUWXpeAxrKzBUpmWnjYgjVpG4hYEYLMSYmLmN7TvVvsN5w9YAGaVWBfc78Luu48oO4qIzw8EyreMmtchKIoVsYglNCIhMgAITQjITFAAQhKMpiFAAIQkI4TEIScyEJCMhCUAKSJKEAKaEUJISCknSQDJBOkgHhJOkgJycJgiUlQgnTBOgOndAMfUePDTaXkTDvZJtNt0eYXlGI2iQ8VA8EZiWMc1sNP5rzf8AV3SvVK1Jz2ODXwQQ8yM2ZrWvlu/2pjzleW7YxhfVMUGM5Uxa28jdfjCyl2aeR1bXe+XPGYmS4iDInW1ipIqFjQIMchf0KGgW0m2FvkeHqoGN2hIHv48Z+I8lPQBq1SHmxA4HSeI4WXaq8lpaNZBb5aj4+iifpGe/CJ8iF0cRpO9xEbnSJ+J9FGSSVhakweNiPiPv5qRVY82Y2SCHW1INtPNVdGpcHoZ4meHotp2AoPfiQ4iQGknz0+I9FSTwaQWQsHsCuGt8PiAjyINj7vRBUwFZzu5FJwcMuogB9hY79xXqAZqIXOntTDNqCkKjTVJ9lvjf5tbJA5mBdY5Z08ehmCCLHUWPXehVtt3AFjy8CWOJM/lJNwfPRVULti8rJ58lh4GQlElCN4IjFyeF2AllR5hoLn3Lk93NcVmtS4isnt6bwWc+bXj8F3/P1GeQP9lzNTl705IQlw4rlertfmevDwjSRXMc/m/oN3nJEhACmYbCl9gFMNXbn1KXeEaTHTj7m/rkiEICFefxE+LEHlcKtxWEcww5pH3uO9d9d+7iSwzwdToHXl1y3L4r8iIkihMtzzhoTQiSUgFJEmUAGEgihJCRJJ0kBMBRBAEQUlTomSToDswju6rHHwvY5pFjIAzXkaWXk7MLc1S8lx0cSZOa4Lt8k69eq9TLiA7KYcQQ0wDBIsbrzPalIiWi3EGbRMhUl2XXRE2jiLEZrgiBHD7Pqqo4gHUbj6g2+SfGyYcCbRPG29RCd/H169Vm2SdxIEC/TrYro17tTf8Af/uVsv4N9jUqza2LxFMVG0iynTpH2HPdcueN4AItpfktXjqNAV20a2z6NJrrU6tFop+LKXEECxEb/qspWYeDproco5PJ6deN8z8+Pn98PUv4LcUw522zWPlyVbjex1Os0lnhdfK4aHqN6Dsfs+rha4ziNwcLgj5KHNNFoVNSPX2ARohp7NosOenSY12pLWgEzrcBV9HF6XU/C4gnVRkttaIGO2iG1RSMQWkunQN3zy1WfxjWB57sy3UdCJhXm3MDTqPbVNnNDmng9p/C7iASfU8Vmf4woio5jg8uAz+EBzYDoOffe8QDoVaue1vJN1O+Mdq5JFHEMZJcwP0F9BxMKpxdYuJgQNw4BTf0kvbPiIF2tcSYzAGIOh0UZ9OTPmuS+52PC6PovDdDHTxTmlu9SNRzKQ6Votg9nu8Gd9me93T6rQVtjUCABSA3TeVWGmlJZNL/ABOqE9uMnmz2kpg3mtRt/ZTKbczJF4N5H3ZZh5Wc63B4Z20ahWx3ROtFy1HZumDPkskx61HZasLjorUffOfXxfsm0a6nhxC4YrAteC1wkfdxwKl4d9l1eJXo4WD5b2koyPOts7LNF3Fp0P15qtIXoO08MKjSw79OR3LBVaZaS06iy1rl5HPqa199efz/ANnJJEmK1OQZMihKEIBShOkgEknToCQ1EEARBAECiCEIkA6xfbLZjmu79olhs8DUF1pI4HjuJW0TPYCCCJBsQbgqGskpnidbXWx9/lxH1XBrTccIhajth2bdQc6rTbNF1zFzTJ3H9XgfJZnDUy463sFg1yXNf/BztltJ9TC1XZGYgAB25lUSGk9c3q1q3PavA1ahZUbmc+BSDRJ7sQM+UDQuO/eAN0Lyeu0TcCbAmQZ6r0/sftSq6gA4tqZQB4gSSBoCQZI6rGyOHk7dPbxtZdbLNYUmivTc3IGsL3av3BxtrpPMhdHgcly2jtyo6k6n3TQXAtkbp3gKswmMdHi14rNs3SL6lWjepTMbCoHYuFxq48cVGcGsK9zLjaO0fCb8V5fhcTX/AEhzmuI7wgONvYDtL8Mx04rR7QxxylDs/DZsLTdoab3u6ySD8R/ZVIty3e49V1RqjXJruSX6lzRf7lO2LhW1azWusCZ8gJj3KkpVlN2bjO7qNfwIPl+5YVtZWT0LqpbJbe8HplMAWAgCwCGu8AKHTxbXCWuBGtjKp9sbdayWgy71A6r03NJZPl69NOc8JEPtXjbBg33PyWMq1F3x+LL3El0lV9R686yW55PqtJR7KCid6b1d7DxWV45rMserDCVoMqkeHk3urU4tHqGExNlOFdZXZ+NloMqe3FyvQjPg+Wt0r3E+vVkysj2hpRVJ/MAfr75V+ayqcXT/AEllSqwx3NnAi7r3g9DKtCa3ow1FP9CT9MfMo4TJ0l2HiDJJ0kAySSdAMknSQHUIggCIIDoCiCAIggCCdME6EjOAIgiQbEbiOBCw+3+yopE1qDTkuXM/Jzb+r8Omm5XfA4fvKjKf53Bp6EwfdKhpMJ4PHsJgKlV0xJOnCxj1W87K4KrS9oQOC3z+xdDDmKbHZRmyyZ9oybxpy0G5KrgA0aR6/FcM22zqqsrXvKDFUVV1nNar3FU3NnM2wEzu9VmNqiRY3WMng9GiKnwR8VjRxUQYmbA3965bLpMzmrXp1KlBhh4YYufZzHc2ek2E3W3wlfCObmwxYGgXhgY5vHOwXj9YSFMIqXbwLtSqJbUsszmE2VVqXc3I3i4QfJuvwV7TwzW0+7HswQeJnU9bqbXpObGYWIkHVrgd4cLEdFwK7q6IQXBwXa+63GXwnlL8SiqU8ry2ZEkTpInVOWkcwum1Ww4HjPuj5/4lHFVeNOLhJxZ93prfb1Rsj5o6NxJGhhRcRWPFPVO9Ra5Uo6VWuwH11wqVkzsRFoUV5urpGigdmVVNo17KqRtcpwW2Jmx2RjY8JPRXdLEjisJha51lX+wq7n1u817to9TN/vipg3nB5mtojCMrH5Iv8Vi8rC7lbruUn+DUnu6j5kOeSOgsqbtbiXFrMwhzg7QQSLBrjz9q/JaTsPhjSpNaNNY4SVrH+57jx9VJLQ7v8n8jNbVpZK9VvB7/AEzGPdCiK07SR+k1o/N8gqxemuj5R9jJJ4SUkDJJ0kAySdJAECiBQAoggOgKIIGlEgOgToGlEgEtZ2HwMl9Us0gMcRb8WbLz0ErL4eiXuDG6uIaOpML1ek0MaGiwaAB0AgLOb4wDnUw+bWPvmqnaWzibiR0+hsVcOrtUSviwbBYPBGTM1sE8br8Rb+7PwKz+08A0zmozxgEHziD6rV4plNxOZgdxtJ8t6pMZSe29A940e1ReTI/9bzoeRPmspI1qtcXlfAwNTAsa+WV69EzcMe0A9QWmfPieKhtoik6aWcu/OSC4XmWhoDQfJa3HUm1ml7PFlMOY9sVGEbiCFSYis4DKGx0gD0ABWWccHpR/qNWd+p22R2he0Gk72m3NPVrgdSxp9Y4+7QNy1KYq0yMpMOaDOUkSL7wRcLCY/BugVAfGz3t1j4+qdu36lAtNM2fZ7Tdrg0lwkcQSf7S1qtcTHUaXa/smvxmHFRpbv1B4EaffNZ10gkEQRYjgQtJhtoUK7Q+jLZE924zH7Lt45G/VRto4HvBLfa/xDgefP7F9RUrVvh2d/g3if/Vl7K37r+D/AGf88yla/cVxrN9E1RpBIIII1GhC4urRzXnJH28cPmJwfTlc3NAXfNKjLVEjwChSIXUUSbqSc4Ex0LX9kaDhSL973mOYAA+MrI0qRc4MaJJIA5k2XqGDFOiKVKCcsC3HefVXrXOTx/HNQoUqtdyfwRWY7CvxOPewA5KTWsLugBI6y53ktts6mKVMuPstBJPICT8FIaabc2VoBd4nEAAlxABJ4mGi/JVG2MRkwtVpN3ZWtHVwzf3Q5bwrxL3ny2q1jthGKWFFJY+bMfXql7nPOriXHqTK5Ikl3HkApIkkAKeE6SASSSSAYBOAmBRhAOESEBEgHCIlCE6AvuxrAcSCfwse4dbN/wBa1mIxJc7ksn2NE4gjjTf8Wn5LTVzElc9vZDBrPMaqpxeNLLC7vWB9/fGS/Hi/H57lWQQ106nVZFDkKIdJ7x2Y3Ju2/ADcOXzXOpUrs1AqDrD/ACKiCqBv6ceal0McNHH11VQmQajqdR+YE06wEeMZS4flcdHjrcXghVm0sODcsyneDqDv6jgd9lp8RhGVG3AcNx3hU+Kwj2CDL6e78zOnEclSSyju01zhLnoz5pjSJlUG3cBFMuH/AE/GOkEH3GfJa6oyDIuuRw4fLSLEHza7ULJcM9SeHEyGxKzhTaNCN/ldaDZ/aGo4jvDnboBDWkDiCBY+vNZfDU3zUBtkJpNHCCWlx8gVLYItwWmWnwzhaUlyj0TH4SjiMKys32g0tDxGYZHOaWu4gRofcshitnVG3yZxxbr5tXfs7jalIPon2X+MDgSIkc+Pkr7C7lWUVLnzPU0Wtu0y29r0ZiHvGl552QNaN5XqlDAUaw/laLH8y0T66qj2v2cw7KhApQLEQ5+h841lI0SfCPV/9+mK+3Fr3Yf7GLyDigfV3LUjYlD8hP8AWd8ipFDAUmezTaDxiT6m61Wln54M5/8AJNNFfZjJv8l9foV3YvAuNdtRzCGtDnAkQCYgddVrcPUzV+im7I2fkaXu9p1ug+qkUtnsacw13qVBR4R4us1s9VZ7SaxxjHoTKMkSTb5LJbWxvevkeyLNHLj1Kstt43K00mm7va5N4eaoCumqPmzyrZc4QySSS2MRJJJIBJJJIBJJ0kBzRtKApNKA7AoguYKIIDoEkwRBAX3Yr+kj9h/wCvNpEgkc1RdjP6SP2X/BW21NoAVS0iAQ2DxJF/eCPJc9vZWRR7YeQ10C8Agzfy9/oulSo57PAQCdePki21i6VPIXCQfiC4jqoTdq0nXaQNM3KbAlY5KESph3NNxf3InsDokwePNWzKu5wlca+zQ67DHBQCtYa9G7TI4KZR2y11qlMtPEaLg59WlZzZb0PxXbvaD/AGrFQXjJroWKwLagmmQd6qGSDDhBGquqWAbqx5HRLF4QOGsu4/I8VRxO+nU8bZHmu2W93i6vB2V3qPqHLts+mHuk6fEq72zsDv358+VzQG5SLGJNyNNeBVW7DVKPtsIHHVvqLK+x4yK5LfyWNbDzDm6j38QrLBVRZVeFxQU2lEyFRLB2ympcmo2bURdo6VmP6tPncf6lAwVWFbYymatJrW3OYHpAMn3ret4lk5Lo5TM41pJgCSdANStHsrZIp+Or7W4fl+pXbA4FlETq7e4/AcAou0ceTYK1l2eEZ1045Z02htHcLAKGNrANO/70VXUde5lcSlcG+WLbFHhdjVXlxJOpuUBTlMV1HIMkkkgEkkkgEkkkgHSSSQHNMhRIAwiBQBECgOgKIFAEYQFz2TdGJZ0qf5bip/aEeMgi3yN1X9lf6SzpU/y3Kftd+ZrX66sJ6ez7vgue7srIy+OqOAuMzR6j75qtZXbOljLXDkfoRPkrTGwNDB9yosWd5HmFgUNfhjmZO9tuvD5JMqOGhv7lRdm9s+IUDFz4ZMSN7Pp+5X9UAEh2inAOwx7ohzZGnFD3NF18se70Ttpj6N+qFwIM/foVBIAbGjYHSXHzXUPiBx0HFVW09vU6Z7seKpvG5p4uI38teinbNdbMTLjqfkOAUHTTS5cvoLF4VxGbfwHDrvUHMr9jwVwxGzQ+7SAfcVrVbjhm9tOeYmZrbKpOuBkPFtvdohw+x60/yZD+RBb77j4LWYXY7W3ecx4Cw+pVk17WiAABwGimyUH0iK4zXbKnZuxnATVIB/K0yPN30VqS1ggWUbE48DeqTG7UnesDo5ZOx2NGgVRWrcFE74uNvNdIWtVe7l9GVtu1YXYimSTFdhwjISiQlAMkkUlIEkkkgEkkkoA6SSSA4BEgCIFAEiCFEEAYRrmCiBQF72QE4kfs1P8ADHzXVtWWvYd9x1BQdjD/AMx/83/FqHHkCq+NMxg8pXPd2UkVOKIuqp+Cz/itvVzimyqbaFXKMo3/ABWBQpNqO8YZSNxq4aiN4PHRanYO1HVmZan84Dka4/jLWyXAfmAIlZpgAgNGZ5tzcTYALlt2oaL2U6boNKDmH/dPicR5mOgUkm9FQMBJMAXLidABqTwWV2v2wzHu6BLWx/PXBcNPANQ39bXoLqPjca7GBgcIaAC9g9l7xvPFo3D4qo2xQyuHMIXhwzphxDgfNbLZeLsF5/QrFscFo8Bi4VWehVYnwbajWtqpdCuszh8dzVlh8UI1UG5bV8ZAmVT4za/NQtpY3cCqV8kpgjhFhX2iXb1zotc88t5Q4XCE9N5Vm1oAgLaurPLMLbscLsZrQ0QE6RTLrSwcTeRJkpTEqQMhKdMgGSSKZAKUpTJISEkhThAOkkkgOAThJJQQEEYTJIAkTUkkBc9mHxVef/DU/wBKjcvvinSXNd2UkBXFjqqPGiBJ+qdJYlQdnUwxprnWSGcvzO63gefJZjaRzVCdZOpSSQIv9i4awVZ2tgVWt5T9+qSSItDsqqTJCttlw4iehSSRmj7NAdmkgGm7+q75H6+qgPrOYSDY7xP0TpK2OMnTXZJvBx/SCVY4DD5hJ0+KSS0rimybZtIswNw0QlJJdJyDJkkkAJTJJKQMUySSAEpJkkJHSTJIB04SSQDykkkgP//Z" alt="Exercise 2">
+                <h3 class="exercise-title">Exercise 2</h3>
+                <p class="exercise-description">Blowing a balloon is a great activity to strengthen oral motor skills.</p>
+            </div>
+            <div class="exercise-item">
+                <img src="https://as2.ftcdn.net/v2/jpg/02/69/72/67/1000_F_269726775_Dr39nPcbJOMmEV1traOr8jdOi5ttKM2N.jpg" alt="Exercise 3">
+                <h3 class="exercise-title">Exercise 3</h3>
+                <p class="exercise-description">Practice blowing bubbles for fun and exercise.</p>
+            </div>
+            <div class="exercise-item">
+                <img src="https://i.ytimg.com/vi/__eOThm6O7s/maxresdefault.jpg" alt="Exercise 4">
+                <h3 class="exercise-title">Exercise 4</h3>
+                <p class="exercise-description">Drip a dot of paint on your paper.
+                    Now take your straw in your mouth and position it about above the paint and blow to create unique shapes and structures.</p>
+            </div>
+            <div class="exercise-item">
+                <img src="https://media.istockphoto.com/id/168504702/photo/blow-away-childhood-freedom-girl-ghild-feather.jpg?s=612x612&w=0&k=20&c=2GfN2HuBUfPmNQ1ntCVNtTOsHprRdEJlG-DrqUYzf_8=" alt="Exercise 5">
+                <h3 class="exercise-title">Exercise 5</h3>
+                <p class="exercise-description">Take a feather and try to keep it in the sky by blowing some air .</p>
+            </div>
+            <div class="exercise-item">
+                <img src="https://heartmindonline.org/sites/default/files/iStock_000016512349_Full.jpg" alt="Exercise 6">
+                <h3 class="exercise-title">Exercise 6</h3>
+                <p class="exercise-description">Blowing pinwheel helps you regulate breath control.</p>
+            </div>
+        </div>
+
+        <!-- Centered Back to Home Button -->
+        <div class="button-container">
+            <a href="practisepage.html" class="back-button">Back to Home</a>
+        </div>
+        
+    </main>
+</body>
+</html>

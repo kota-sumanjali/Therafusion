@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Theratalk Patient Allocation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="keys.js"></script>
+    <script src="chatbot.js"></script>
+    <style>
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .logo img {
+            max-height: 60px;
+        }
+
+        main {
+            padding: 40px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004d99;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            height: 60%
+        }
+
+
+
+
+
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            /* Light background */
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            /* Dark text color for better contrast */
+        }
+
+        /* Chatbot styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 80px;
+            /* Distance from the bottom, adjusted to avoid overlap */
+            right: 20px;
+            /* Distance from the right */
+            width: 300px;
+            /* Fixed width */
+            height: 400px;
+            /* Height */
+            background-color: #fff;
+            /* White background */
+            border: 1px solid #ddd;
+            /* Light border */
+            border-radius: 5px;
+            /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            display: none;
+            /* Initially hidden */
+            flex-direction: column;
+            /* Stack children vertically */
+            z-index: 9999;
+            /* Ensure it is on top */
+        }
+
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4CAF50;
+            /* Header color */
+            color: white;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+            /* Rounded top corners */
+        }
+
+        .chatbot-content {
+            flex: 1;
+            /* Allow content to grow */
+            max-height: 300px;
+            /* Limit height */
+            overflow-y: auto;
+            /* Scroll if content overflows */
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .chatbot-input button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .chatbot-input button:hover {
+            background-color: #45a049;
+            /* Darker shade on hover */
+        }
+
+        /* Chat icon styles */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            /* Distance from the bottom */
+            right: 20px;
+            /* Distance from the right */
+            width: 60px;
+            /* Icon size */
+            height: 60px;
+            /* Icon size */
+            background-color: #4CAF50;
+            /* Icon background color */
+            color: white;
+            /* Icon color */
+            border-radius: 50%;
+            /* Circular shape */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* Shadow effect */
+            z-index: 10000;
+            /* Ensure it is on top */
+        }
+
+        .chat-icon:hover {
+            background-color: #45a049;
+            /* Darker shade on hover */
+        }
+
+        .chat-icon:before {
+            content: "💬";
+            /* Chat icon emoji */
+            font-size: 24px;
+            /* Icon size */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="logo">
+                <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="Theratalk Logo">
+            </div>
+            <h1>Therafusion</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-header">
+                <h3>Chatbot</h3>
+                <button id="closeButton">X</button>
+            </div>
+            <div class="chatbot-content" id="chatbotContent">
+                <!-- Chatbot messages will be displayed here -->
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Ask your therapy question here..." />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+
+        <!-- Chat Icon -->
+        <div class="chat-icon" id="chatIcon"></div>
+
+
+
+
+        <div class="container">
+            <button class="btn btn-primary btn-lg mb-4" id="allocatePatientsBtn">
+                <h5 class="mb-0">Allocate Patients</h5>
+
+            </button>
+
+            <div id="patientDropdown" style="display: none;" class="mb-4">
+                <h3>Select a Patient</h3>
+                <select id="patientList" class="form-control">
+                    <option value="">--Select Patient--</option>
+                    <option value="John">krishna (35, By birth)</option>
+                    <option value="Kiara">Kumari (20, Disability)</option>
+                    <option value="Jenny">Harry (8, By birth)</option>
+                    <option value="Bunny">Priya (17,Post-Traumatic Stress Disorder )</option>
+
+
+                </select>
+                <button class="btn btn-primary mt-2" id="addPatientBtn" style="display: none;">Assign Patient</button>
+            </div>
+
+            <h3>Patients</h3>
+
+            <table class="table table-striped" id="patientTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <!--<th>Age</th>
+                        <th>Reason</th>-->
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal for text input -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Enter Text</h2>
+            <textarea id="actionText" rows="5" class="form-control"></textarea>
+            <button id="saveText" class="btn btn-primary mt-2" onclick="saveText()">Save</button>
+            <button class="btn btn-secondary mt-2" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const overlay = document.getElementById('myModal');
+
+        document.getElementById('chatIcon').addEventListener('click', function () {
+            document.getElementById('chatbotContainer').style.display = 'flex';
+            document.getElementById('userInput').focus(); // Focus on the input field when opened
+        });
+
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+        var userName = GetURLParameter('user');
+
+        //alert('login user: '+userName);
+
+        function loadPatients() {
+            const therapistPatientsApi = 'http://localhost:3000/therapists?therapistName=' + userName;
+
+            fetch(therapistPatientsApi)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#patientTable tbody');
+
+                    data.forEach(patient => {
+                        const row = document.createElement('tr');
+
+                        const nameCell = document.createElement('td');
+                        nameCell.textContent = patient.patientName;
+                        row.appendChild(nameCell);
+
+                        const ageCell = document.createElement('td');
+                        ageCell.textContent = '45';//patient.age;
+                        //row.appendChild(ageCell);
+
+                        const reasonCell = document.createElement('td');
+                        reasonCell.textContent = 'Loco motor';//patient.reason;
+                        //row.appendChild(reasonCell);
+
+                        const actionsCell = document.createElement('td');
+                        /*actionsCell.textContent = 'Edit | Delete';
+                        row.appendChild(actionsCell);*/
+
+
+                        const therapyPlanButton = document.createElement('button');
+                        therapyPlanButton.textContent = 'Prepare Therapy Plan';
+                        therapyPlanButton.className = 'btn btn-primary btn-sm mr-2 open-modal';
+                        therapyPlanButton.setAttribute('data-action', 'add-plan')
+                        // therapyPlanButton.onclick = () => editPatient(patient.patientName); // Assuming patient has an id
+                        therapyPlanButton.onclick = () => openOverlay(userName, patient.patientName, therapyPlanButton.getAttribute('data-action'));
+
+                        const therapySessionsBtn = document.createElement('button');
+                        therapySessionsBtn.textContent = 'Allocate Therapy Sessions';
+                        therapySessionsBtn.className = 'btn btn-primary btn-sm mr-2 open-modal';
+                        therapySessionsBtn.setAttribute('data-action', 'add-sessions')
+                        therapySessionsBtn.onclick = () => openOverlay(userName, patient.patientName, therapySessionsBtn.getAttribute('data-action'));
+
+                        const therapyGoalsBtn = document.createElement('button');
+                        therapyGoalsBtn.textContent = 'Add Goals';
+                        therapyGoalsBtn.className = 'btn btn-primary btn-sm mr-2 open-modal';
+                        therapyGoalsBtn.setAttribute('data-action', 'add-goals')
+                        therapyGoalsBtn.onclick = () => openOverlay(userName, patient.patientName, therapyGoalsBtn.getAttribute('data-action'));
+
+                        const therapyProgressBtn = document.createElement('button');
+                        therapyProgressBtn.textContent = 'Progress Report';
+                        therapyProgressBtn.className = 'btn btn-primary btn-sm mr-2 open-modal';
+                        therapyProgressBtn.setAttribute('data-action', 'add-progress')
+                        therapyProgressBtn.onclick = () => openOverlay(userName, patient.patientName, therapyProgressBtn.getAttribute('data-action'));
+
+                        const feedbackButton = document.createElement('button');
+                        feedbackButton.textContent = 'Feedback';
+                        feedbackButton.className = 'btn btn-primary btn-sm mr-2 open-modal';
+                        feedbackButton.setAttribute('data-action', 'feedback');
+                        feedbackButton.onclick = () => openOverlay(userName, patient.patientName, feedbackButton.getAttribute('data-action'));
+
+                        // Append buttons to actions cell
+                        actionsCell.appendChild(therapyPlanButton);
+                        actionsCell.appendChild(therapySessionsBtn);
+                        actionsCell.appendChild(therapyGoalsBtn);
+                        actionsCell.appendChild(therapyProgressBtn);
+                        actionsCell.appendChild(feedbackButton);
+                        row.appendChild(actionsCell);
+
+
+
+
+
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+
+                });
+
+        }
+
+        function openOverlay(therapistName, patientName, action) {
+            overlay.setAttribute('therapistName', therapistName);
+            overlay.setAttribute('patientName', patientName);
+            overlay.setAttribute('action', action);
+            
+            if (action == 'add-plan') {
+                document.getElementById("modalTitle").innerHTML = 'Plan Details:'
+                const therapyPlanApi = 'http://localhost:3000/therapy_plans?therapistName=' + therapistName + '&patientName=' + patientName;
+
+
+                fetch(therapyPlanApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(plan => {
+                            actionText.value = plan.therapyPlan;
+                            overlay.setAttribute('planId', plan.id);
+                        });
+                        overlay.style.display = 'flex'; // Show overlay
+                        // Clear previous text
+
+                        // You can also save the action type and ID if needed
+                        console.log(`Action: ${action}, Patient ID: ${patientName}`);
+                    })
+            }
+            else if (action == 'add-sessions') {
+                document.getElementById("modalTitle").innerHTML = 'Session Details:'
+                const therapySessionApi = 'http://localhost:3000/therapy_sessions?therapistName=' + therapistName + '&patientName=' + patientName;
+
+
+                fetch(therapySessionApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(session => {
+                            actionText.value = session.sessionPlan;
+                            overlay.setAttribute('sessionId', session.id);
+                        });
+                        overlay.style.display = 'flex'; // Show overlay
+                        // Clear previous text
+
+                        // You can also save the action type and ID if needed
+                        console.log(`Action: ${action}, Patient ID: ${patientName}`);
+                    })
+            }
+            else if (action == 'add-goals') {
+                document.getElementById("modalTitle").innerHTML = 'Goal Details:'
+                const goaldetailsApi = 'http://localhost:3000/therapy_goals?therapistName=' + therapistName + '&patientName=' + patientName;
+
+
+                fetch(goaldetailsApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(goal => {
+                            actionText.value = goal.plan;
+                            overlay.setAttribute('goalId', goal.id);
+                        });
+                        overlay.style.display = 'flex'; // Show overlay
+                        // Clear previous text
+
+                        // You can also save the action type and ID if needed
+                        console.log(`Action: ${action}, Patient ID: ${patientName}`);
+                    })
+            }
+            else if (action == 'add-progress') {
+                document.getElementById("modalTitle").innerHTML = 'Progress Details:'
+                const progressDetailsApi = 'http://localhost:3000/therapy_progress?therapistName=' + therapistName + '&patientName=' + patientName;
+
+
+                fetch(progressDetailsApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(record => {
+                            actionText.value = record.progressDetails;
+                            overlay.setAttribute('progressId', record.id);
+                        });
+                        overlay.style.display = 'flex'; // Show overlay
+                        // Clear previous text
+
+                        // You can also save the action type and ID if needed
+                        console.log(`Action: ${action}, Patient ID: ${patientName}`);
+                    })
+            }
+            else if (action == 'feedback') {
+                document.getElementById("modalTitle").innerHTML = 'Feedback Details:'
+                document.getElementById('saveText').style.display = 'none';
+                document.getElementById('saveText').disabled = true;
+                const feedbackApi = 'http://localhost:3000/feedback?therapistName=' + therapistName + '&patientName=' + patientName;
+
+
+                fetch(feedbackApi)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(record => {
+                            if(record.action == 'denied'){
+                                actionText.value = 'The plan has been denied by Superviser. Here is the feedback\n ' + record.feedback;
+                            }
+                            else{
+                                actionText.value = 'The plan has been accepted by Superviser. Here is the feedback\n ' + record.feedback;
+                            }
+                            overlay.setAttribute('feedbackId', record.id);
+                        });
+                        overlay.style.display = 'flex'; // Show overlay
+                        // Clear previous text
+
+                        // You can also save the action type and ID if needed
+                        console.log(`Action: ${action}, Patient ID: ${patientName}`);
+
+                        document.getElementById('saveText').style.display = 'none';
+                    })
+            }
+
+        }
+
+
+        const apiUrl = 'http://localhost:3000/users';
+
+        // Function to populate the dropdown
+        async function populateDropdown() {
+            try {
+                const response = await fetch(apiUrl);
+                const items = await response.json();
+
+                const therapistresponse = await fetch('http://localhost:3000/therapists');
+                const therapistItems = await therapistresponse.json();
+
+                const selectElement = document.getElementById('patientList');
+
+                // Clear existing options (if any)
+                selectElement.innerHTML = '<option value="">Select an item</option>';
+
+                console.log(therapistItems);
+                // Populate the dropdown with items from the API
+                items.forEach(item => {
+                    //console.log(item.username);
+                    var isPatientAlreadyAllocated = 'N';
+                    therapistItems.forEach(therapist => {
+                        console.log('allocated patient name: ' + therapist.patientName);
+                        if (isPatientAlreadyAllocated != 'Y' && item.username == therapist.patientName) {
+                            isPatientAlreadyAllocated = 'Y';
+                            console.log(item.username + 'is laready allocated');
+                        }
+
+                    });
+                    if (item.role != 'Therapist' && item.role != 'Superviser' && isPatientAlreadyAllocated != 'Y') {
+
+                        const option = document.createElement('option');
+                        option.value = item.username; // Set the value to the item's ID
+                        option.textContent = item.username; // Set the display text to the item's name
+                        selectElement.appendChild(option);
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching items:', error);
+            }
+        }
+
+        // Call the function to populate the dropdown on page load
+        window.onload = populateDropdown();
+        window.onload = loadPatients();
+        window.onload = loadKeys;
+
+
+        addPatientBtn.addEventListener('click', addPatient);
+
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get all the buttons that open the modal
+        var buttons = document.querySelectorAll(".open-modal");
+
+        // When the user clicks on a button, open the modal
+        buttons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                var action = this.getAttribute("data-action");
+                setModalTitle(action);
+                modal.style.display = "block";
+            });
+        });
+
+        function addPatient() {
+            const selectedPatient = patientList.value;
+
+            const data = {
+                "patientName": selectedPatient,
+                "therapistName": userName
+            };
+            if (selectedPatient) {
+                fetch('http://localhost:3000/therapists', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+
+                        populateDropdown();
+                        loadPatients();
+                        patientDropdown.style.display = 'none';
+                        addPatientBtn.style.display = 'none';
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+
+                    });
+            } else {
+                alert('Please select a patient.');
+            }
+
+
+        }
+
+        // Set the modal title based on the button clicked
+        function setModalTitle(action) {
+            var title = "";
+            switch (action) {
+                case "add-plan":
+                    title = "Add Plan";
+                    break;
+                case "add-sessions":
+                    title = "Add Sessions";
+                    break;
+                case "enter-goals":
+                    title = "Enter Goals";
+                    break;
+                case "prepare-report":
+                    title = "Prepare Report";
+                    break;
+                case "enter-feedback":
+                    title = "Enter Feedback";
+                    break;
+                default:
+                    title = "Enter Text";
+            }
+            document.getElementById("modalTitle").innerText = title;
+        }
+
+        // When the user clicks on the "Close" button, close the modal
+        function closeModal() {
+            modal.style.display = "none";
+            document.getElementById("actionText").value = ""; // Clear the text area
+        }
+
+        // Save the text entered in the text area
+        function saveText() {
+            var textInput = document.getElementById("actionText");
+            var enteredText = textInput.value;
+            var therapistName = overlay.getAttribute('therapistName');
+            var patientName = overlay.getAttribute('patientName');
+
+            var action = overlay.getAttribute('action');
+
+
+            if (action == 'add-plan') {
+
+                var planId = overlay.getAttribute('planId');
+                savePlanDetails(therapistName, patientName, enteredText, planId);
+            } else if (action == 'add-sessions') {
+
+                var sessionId = overlay.getAttribute('sessionId');
+                saveSessionDetails(therapistName, patientName, enteredText, sessionId);
+            }
+            else if (action == 'add-goals') {
+
+                var goalId = overlay.getAttribute('goalId');
+                saveGoalDetails(therapistName, patientName, enteredText, goalId);
+            }
+            else if (action == 'add-progress') {
+
+                var progressId = overlay.getAttribute('progressId');
+                saveProgressDetails(therapistName, patientName, enteredText, progressId);
+            }
+            else{
+
+            }
+
+            console.log("Saved text:", enteredText); // You can replace this with actual save logic
+            closeModal();
+        }
+
+        function savePlanDetails(userName, patientName, enteredText, planId) {
+            var data = '';
+            if (planId) {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "therapyPlan": enteredText,
+                    "id": planId
+                };
+            } else {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "therapyPlan": enteredText
+
+                };
+            }
+
+            if (enteredText) {
+                var methodType = '';
+                var api = 'http://localhost:3000/therapy_plans';
+                if (planId){
+                    methodType = 'PATCH';
+                    api = 'http://localhost:3000/therapy_plans/'+planId;
+                }
+                else
+                    methodType = 'POST';
+                fetch(api, {
+                    method: methodType,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        //alert('plan details for Patient' ${patientName} 'saved successfully!`);
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        //alert('An error occurred while saving the plan details of the patient.');
+                    });
+            } else {
+                alert('Please enter details.');
+                return;
+            }
+        }
+
+        function saveSessionDetails(userName, patientName, enteredText, sessionId) {
+            var data = '';
+            var api = 'http://localhost:3000/therapy_sessions';
+            var methodType;
+            if (sessionId) {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "sessionPlan": enteredText,
+                    "id": sessionId
+                };
+                methodType = 'PATCH';
+                api = 'http://localhost:3000/therapy_sessions/'+sessionId;
+            } else {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "sessionPlan": enteredText
+
+                };
+                methodType = 'POST';
+            }
+
+            if (enteredText) {
+                
+
+                fetch(api, {
+                    method: methodType,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        //alert('session details for Patient' ${patientName} 'saved successfully!`);
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        //alert('An error occurred while saving the session details of the patient.');
+                    });
+            } else {
+                alert('Please enter details.');
+                return;
+            }
+        }
+
+        function saveGoalDetails(userName, patientName, enteredText, goalId) {
+            var data = '';
+            if (goalId) {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "plan": enteredText,
+                    "id": goalId
+                };
+            } else {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "plan": enteredText
+
+                };
+            }
+
+            if (enteredText) {
+                fetch('http://localhost:3000/therapy_goals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        //alert('session details for Patient' ${patientName} 'saved successfully!`);
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        //alert('An error occurred while saving the session details of the patient.');
+                    });
+            } else {
+                alert('Please enter details.');
+                return;
+            }
+        }
+
+
+        function saveProgressDetails(userName, patientName, enteredText, progressId) {
+            var data = '';
+            if (progressId) {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "progressDetails": enteredText,
+                    "id": progressId
+                };
+            } else {
+                data = {
+                    "therapistName": userName,
+                    "patientName": patientName,
+                    "progressDetails": enteredText
+
+                };
+            }
+
+            if (enteredText) {
+                fetch('http://localhost:3000/therapy_progress', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        //alert('session details for Patient' ${patientName} 'saved successfully!`);
+
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        //alert('An error occurred while saving the session details of the patient.');
+                    });
+            } else {
+                alert('Please enter details.');
+                return;
+            }
+        }
+
+        // Close the modal when clicking outside of it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Show the patient dropdown when the Allocate Patients button is clicked
+        document.getElementById("allocatePatientsBtn").addEventListener("click", function () {
+            var dropdown = document.getElementById("patientDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+            var addPatientBtn = document.getElementById("addPatientBtn");
+            addPatientBtn.style.display = addPatientBtn.style.display === "none" ? "block" : "none";
+        });
+
+        // Add patient button functionality
+        document.getElementById("addPatientBtn").addEventListener("click", function () {
+            var selectedPatient = document.getElementById("patientList").value;
+            if (selectedPatient) {
+                console.log("Added patient:", selectedPatient); // Replace with actual logic to add the patient
+            } else {
+                alert("Please select a patient.");
+            }
+        });
+
+        document.getElementById('sendButton').addEventListener('click', chatbot);
+        document.addEventListener('keydown', function (event) {
+            if (event.key == 'Enter') {
+
+                document.getElementById('sendButton').click();
+            };
+        });
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            document.querySelector('.chatbot-container').style.display = 'none';
+        });
+
+        
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            document.getElementById('chatbotContent').appendChild(messageElement);
+            const chatbox = document.getElementById('chatbotContent');
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+        }
+    </script>
+
+</body>
+
+</html>

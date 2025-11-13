@@ -1,0 +1,316 @@
+{
+  "users": [
+    {
+      "id": "902b",
+      "username": "sindhu",
+      "password": "sindhu",
+      "name": "sai sindhu",
+      "phone": "9704048016",
+      "role": ""
+    },
+    {
+      "id": "dbff",
+      "username": "sindhu.dr1",
+      "password": "sindhu",
+      "name": "sai sindhu",
+      "phone": "9704048016",
+      "role": "Therapist"
+    },
+    {
+      "id": "0b96",
+      "username": "sindhu.supervise1",
+      "password": "sindhu",
+      "name": "sindhu",
+      "phone": "9704048016",
+      "role": "Superviser"
+    },
+    {
+      "id": "5245",
+      "username": "lakshmi",
+      "password": "lakshmi",
+      "name": "lakshmi",
+      "phone": "9247877844",
+      "role": ""
+    },
+    {
+      "id": "f915",
+      "username": "sandeep",
+      "password": "sandeep",
+      "name": "k.s.v.p. sandeep",
+      "phone": "9247877844",
+      "role": ""
+    },
+    {
+      "id": "273a",
+      "username": "kunam",
+      "password": "kunam",
+      "name": "kunam",
+      "phone": "9247877844",
+      "role": ""
+    },
+    {
+      "id": "afa4",
+      "username": "kiara.dr2",
+      "password": "kiara",
+      "name": "kiara",
+      "phone": "9859673445",
+      "role": "Therapist"
+    },
+    {
+      "id": "ce4f",
+      "username": "siddhardh.supervise1",
+      "password": "siddu",
+      "name": "siddhardh",
+      "phone": "9700077355",
+      "role": "Superviser"
+    },
+    {
+      "id": "8f4c",
+      "username": "reena",
+      "password": "reena",
+      "name": "reena",
+      "phone": "9247877844",
+      "role": ""
+    },
+    {
+      "id": "a1b5",
+      "username": "vishaka.dr1",
+      "password": "vishaka",
+      "name": "vishaka",
+      "phone": "6745873259",
+      "role": "Therapist"
+    },
+    {
+      "id": "9e2b",
+      "username": "hari.supervise2",
+      "password": "hari",
+      "name": "hari",
+      "phone": "6745873259",
+      "role": "Superviser"
+    },
+    {
+      "id": "e7e8",
+      "username": "alia",
+      "password": "alia",
+      "name": "alia",
+      "phone": "9700077355",
+      "role": ""
+    },
+    {
+      "id": "ceb5",
+      "username": "sindhu.dr7842",
+      "password": "sindhu",
+      "name": "Sai Sindhu",
+      "phone": "9000123456",
+      "role": "Therapist"
+    },
+    {
+      "id": "4829",
+      "username": "pooji",
+      "password": "pooji",
+      "name": "poojitha",
+      "phone": "1234567898",
+      "role": ""
+    },
+    {
+      "id": "916a",
+      "username": "kiran",
+      "password": "kiran",
+      "name": "kiran",
+      "phone": "9247877844",
+      "role": ""
+    }
+  ],
+  "therapists": [
+    {
+      "id": "ac99",
+      "patientName": "sindhu",
+      "therapistName": "sindhu.dr1"
+    },
+    {
+      "id": "481b",
+      "patientName": "lakshmi",
+      "therapistName": "sindhu.dr1"
+    },
+    {
+      "id": "e748",
+      "patientName": "sandeep",
+      "therapistName": "sindhu.dr1"
+    },
+    {
+      "id": "579d",
+      "patientName": "kunam",
+      "therapistName": "kiara.dr2"
+    },
+    {
+      "id": "cd35",
+      "patientName": "reena",
+      "therapistName": "vishaka.dr1"
+    },
+    {
+      "id": "f68f",
+      "patientName": "alia",
+      "therapistName": "kiara.dr2"
+    },
+    {
+      "id": "6270",
+      "patientName": "pooji",
+      "therapistName": "sindhu.dr1"
+    },
+    {
+      "id": "2bc3",
+      "patientName": "kiran",
+      "therapistName": "sindhu.dr1"
+    }
+  ],
+  "therapy_plans": [
+    {
+      "id": "a097",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sindhu",
+      "therapyPlan": "hi"
+    },
+    {
+      "id": "a5de",
+      "therapistName": "undefined",
+      "patientName": "sindhu",
+      "therapyPlan": "Hello"
+    },
+    {
+      "id": "ac8d",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sandeep",
+      "therapyPlan": "9th sep therapy plan starts"
+    },
+    {
+      "id": "982e",
+      "therapistName": "kiara.dr2",
+      "patientName": "kunam",
+      "therapyPlan": "therapy plan starts from tomorrow"
+    },
+    {
+      "id": "a2fd",
+      "therapistName": "vishaka.dr1",
+      "patientName": "reena",
+      "therapyPlan": "plan starts from 7th sep"
+    },
+    {
+      "id": "9112",
+      "therapistName": "kiara.dr2",
+      "patientName": "alia",
+      "therapyPlan": "plan starts from 9th sep"
+    },
+    {
+      "id": "ac8d",
+      "therapistName": "sindhu.dr1",
+      "patientName": "alia",
+      "therapyPlan": "hi"
+    },
+    {
+      "id": "332e",
+      "therapistName": "sindhu.dr7842",
+      "patientName": "reena",
+      "therapyPlan": "Plan for the patient: reena"
+    },
+    {
+      "id": "e79a",
+      "therapistName": "sindhu.dr1",
+      "patientName": "pooji",
+      "therapyPlan": "plan starts from 9th sep"
+    },
+    {
+      "id": "e79a",
+      "therapistName": "sindhu.dr1",
+      "patientName": "pooji",
+      "therapyPlan": "plan starts from 9th sep"
+    },
+    {
+      "id": "0c38",
+      "therapistName": "sindhu.dr1",
+      "patientName": "kiran",
+      "therapyPlan": "plan starts from sep9th"
+    }
+  ],
+  "therapy_sessions": [
+    {
+      "id": "00b3",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sindhu",
+      "sessionPlan": "hello"
+    },
+    {
+      "id": "cbb0",
+      "therapistName": "kiara.dr2",
+      "patientName": "kunam",
+      "sessionPlan": "fist session starts on 9th sep"
+    },
+    {
+      "id": "ee3f",
+      "therapistName": "vishaka.dr1",
+      "patientName": "reena",
+      "sessionPlan": "9th sep 1st session"
+    },
+    {
+      "id": "ee86",
+      "therapistName": "kiara.dr2",
+      "patientName": "alia",
+      "sessionPlan": "1st session - 9th sep"
+    }
+  ],
+  "therapy_goals": [
+    {
+      "id": "7a84",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sindhu",
+      "plan": "dfg"
+    },
+    {
+      "id": "7a84",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sindhu",
+      "plan": "goal 1\ngoal 2\ngoal 3\n.....\n....\n.....\n.....\ngoal N"
+    },
+    {
+      "id": "7a84",
+      "therapistName": "sindhu.dr1",
+      "patientName": "lakshmi",
+      "plan": "Goals are mile stones to be set and achieved. Following are the goals for this student.\nGoal1: Prononciation\nGoal 2: Proper voice modulation"
+    },
+    {
+      "id": "c5a8",
+      "therapistName": "undefined",
+      "patientName": "sindhu",
+      "plan": "goal 1"
+    },
+    {
+      "id": "c5a8",
+      "therapistName": "undefined",
+      "patientName": "sindhu",
+      "plan": "goal 1 fgurjgrjg\nfurgorugor"
+    },
+    {
+      "id": "c5a8",
+      "therapistName": "undefined",
+      "patientName": "sindhu",
+      "plan": "goal 1 fgurjgrjg\nfurgorugor"
+    }
+  ],
+  "therapy_progress": [
+    {
+      "id": "aacb",
+      "therapistName": "sindhu.dr1",
+      "patientName": "sindhu",
+      "progressDetails": "123"
+    }
+  ],
+  
+  "feedback": [],
+
+  "api_keys":[
+	  {
+	  	"name":"openai",
+		  "value": ""
+	  }
+  ]
+
+}

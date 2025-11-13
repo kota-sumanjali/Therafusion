@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therafusion - Breathing Exercises</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f5; /* Light background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            height: 100vh; /* Set height to full viewport height */
+            color: #333; /* Dark text color for better contrast */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 50px; /* Adjust the logo size */
+            margin-right: 10px;
+        }
+
+        h1 {
+            color: #4CAF50; /* Main title color */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .exercise-text {
+            font-size: 120px; /* Larger font size for exercises */
+            margin: 50px 0;
+            opacity: 0; /* Start invisible for animation */
+            transition: opacity 0.5s ease-in-out; /* Fade in effect */
+        }
+
+        .button-container {
+            margin-top: 50px;
+        }
+
+        .do-it-again {
+            background-color: #4CAF50; /* Button color */
+            color: white;
+            border: none;
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px 40px; /* Larger padding for button */
+            font-size: 36px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .do-it-again:hover {
+            background-color: #45a049; /* Darker shade on hover */
+            transform: translateY(-2px); /* Lift effect */
+        }
+
+        .do-it-again:active {
+            transform: translateY(1px); /* Press effect */
+        }
+
+        .exercise-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .exercise-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .exercise-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .exercise-title {
+            font-size: 1.2em;
+            margin: 10px 0 5px;
+            color: #4CAF50;
+        }
+
+        .exercise-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="Logo" class="logo"> <!-- Replace with your logo URL -->
+        <h1>Therafusion</h1>
+    </div>
+
+    <div id="exerciseText" class="exercise-text"></div>
+
+    <div class="button-container">
+        <button class="do-it-again" onclick="startBreathingExercises()">Do It Again</button>
+    </div>
+
+    <script>
+        const exercises = [
+            "1",
+            "2",
+            "3",
+            "Breathe In",
+            "Hold On",
+            "Breathe Out"
+        ];
+
+        let currentIndex = 0;
+
+        function showNextExercise() {
+            const exerciseText = document.getElementById('exerciseText');
+            exerciseText.textContent = exercises[currentIndex];
+            exerciseText.style.opacity = 1; // Fade in
+
+            // Hide the text after 1 second
+            setTimeout(() => {
+                exerciseText.style.opacity = 0; // Fade out
+            }, 1000); // 1 second
+
+            currentIndex++;
+
+            // Show the next exercise after a delay
+            if (currentIndex < exercises.length) {
+                if(currentIndex == 5)
+                    setTimeout(showNextExercise, 3000); // 3 seconds delay before next
+                else
+                    setTimeout(showNextExercise, 2000); // 2 seconds delay before next
+            }
+        }
+
+        function startBreathingExercises() {
+            currentIndex = 0; // Reset the index
+            showNextExercise(); // Start showing exercises
+        }
+
+        // Start the breathing exercises on page load
+        window.onload = startBreathingExercises;
+    </script>
+<div class="button-container">
+    <a href="practisepage.html" class="back-button">Back to Home</a>
+</div>
+</body>
+</html>

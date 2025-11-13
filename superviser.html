@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheraTalk Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="keys.js"></script>
+    <script src="chatbot.js"></script>
+    <style>
+        /* CSS styles for a professional look */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo img {
+            max-width: 80px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .search-bar {
+            display: flex;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 200px;
+        }
+
+        .search-bar button {
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .therapist-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .therapist-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .therapist-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .therapist-card img {
+            max-width: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            margin: 10px 0;
+        }
+
+        .buttons button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        /* .rating {
+            margin: 10px 0;
+        }
+
+        .rating .star {
+            color: gold;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .rating .star.selected {
+            color: #FFD700;
+        }*/
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            top: -9999px;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
+        .patient-list {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .patient-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .patient-list li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .review-section {
+            margin-top: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 60px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            resize: none;
+        }
+
+        .review-buttons {
+            margin-top: 10px;
+        }
+
+        .review-buttons button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+
+        .review-buttons button:hover {
+            background-color: #218838;
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .modal-content h3 {
+            margin-top: 0;
+        }
+
+        .modal-content textarea {
+            height: 100px;
+        }
+
+        .modal-content .buttons {
+            text-align: right;
+        }
+
+        /* Chatbot styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 80px;
+            /* Distance from the bottom, adjusted to avoid overlap */
+            right: 20px;
+            /* Distance from the right */
+            width: 300px;
+            /* Fixed width */
+            height: 400px;
+            /* Height */
+            background-color: #fff;
+            /* White background */
+            border: 1px solid #ddd;
+            /* Light border */
+            border-radius: 5px;
+            /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            display: none;
+            /* Initially hidden */
+            flex-direction: column;
+            /* Stack children vertically */
+            z-index: 9999;
+            /* Ensure it is on top */
+        }
+
+        .chatbot-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4CAF50;
+            /* Header color */
+            color: white;
+            padding: 10px;
+            border-radius: 5px 5px 0 0;
+            /* Rounded top corners */
+        }
+
+        .chatbot-content {
+            flex: 1;
+            /* Allow content to grow */
+            max-height: 300px;
+            /* Limit height */
+            overflow-y: auto;
+            /* Scroll if content overflows */
+            margin-top: 5px;
+            padding: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .chatbot-input button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .chatbot-input button:hover {
+            background-color: #45a049;
+            /* Darker shade on hover */
+        }
+
+        /* Chat icon styles */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            /* Distance from the bottom */
+            right: 20px;
+            /* Distance from the right */
+            width: 60px;
+            /* Icon size */
+            height: 60px;
+            /* Icon size */
+            background-color: #4CAF50;
+            /* Icon background color */
+            color: white;
+            /* Icon color */
+            border-radius: 50%;
+            /* Circular shape */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            /* Shadow effect */
+            z-index: 10000;
+            /* Ensure it is on top */
+        }
+
+        .chat-icon:hover {
+            background-color: #45a049;
+            /* Darker shade on hover */
+        }
+
+        .chat-icon:before {
+            content: "💬";
+            /* Chat icon emoji */
+            font-size: 24px;
+            /* Icon size */
+        }
+
+
+        .therapist-list {
+            display: flex;
+            /* Use flexbox for horizontal layout */
+            flex-wrap: wrap;
+            /* Allow wrapping to the next line */
+            gap: 20px;
+            /* Space between therapist cards */
+        }
+
+        .therapist-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            width: 300px;
+            /* Fixed width for each therapist card */
+        }
+
+        .patient-list {
+            margin-top: 10px;
+        }
+
+        .buttons {
+            margin-top: 5px;
+        }
+
+        .review-section {
+            margin-top: 10px;
+        }
+
+        /* Overlay styles */
+        .overlay {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Black background with opacity */
+            justify-content: center;
+            /* Center the content */
+            align-items: center;
+            /* Center the content */
+            z-index: 1000;
+            /* Sit on top */
+        }
+
+        .overlay-content {
+            background-color: white;
+            /* White background for the content */
+            padding: 20px;
+            border-radius: 5px;
+            /* Rounded corners */
+            width: 400px;
+            /* Increased width for better visibility */
+            max-height: 80%;
+            /* Limit height for the overlay */
+            overflow-y: auto;
+            /* Enable scrolling if content overflows */
+        }
+
+        textarea {
+            width: 95%;
+            /* Full width of the overlay content */
+            height: 100px;
+            /* Set a default height */
+            resize: vertical;
+            /* Allow vertical resizing */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="TheraTalk Logo">
+        </div>
+        <h1>Therafusion</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="Search therapists...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-header">
+                <h3>Chatbot</h3>
+                <button id="closeButton">X</button>
+            </div>
+            <div class="chatbot-content" id="chatbotContent">
+                <!-- Chatbot messages will be displayed here -->
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Ask your therapy question here..." />
+                <button id="sendButton">Send</button>
+            </div>
+        </div>
+
+        <!-- Chat Icon -->
+        <div class="chat-icon" id="chatIcon"></div>
+
+        <section class="therapist-list" id="therapistList"></section>
+
+        <!-- Overlay for displaying therapy plan or goals -->
+        <div class="overlay" id="overlay">
+            <div class="overlay-content">
+                <h2 id="modalTitle"></h2>
+                <textarea id="modalText" rows="4" cols="30" readonly></textarea><br>
+                <div class="buttons">
+                    <button id="closeOverlayButton">Close</button>
+                </div>
+            </div>
+        </div>
+
+
+
+        </section>
+    </main>
+
+
+    <script>
+
+        document.getElementById('chatIcon').addEventListener('click', function () {
+            document.getElementById('chatbotContainer').style.display = 'flex';
+            document.getElementById('userInput').focus(); // Focus on the input field when opened
+        });
+
+        window.onload = populateTherapistPatients();
+        window.onload = loadKeys;
+
+        function populateTherapistPatients() {
+            const therapistPatientsApi = 'http://localhost:3000/therapists';
+            fetch(therapistPatientsApi)
+                .then(response => response.json())
+                .then(data => {
+
+                });
+        }
+
+
+
+        function GetURLParameter(sParam) {
+            var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++) {
+                var sParameterName = sURLVariables[i].split('=');
+                if (sParameterName[0] == sParam) {
+                    return sParameterName[1];
+                }
+            }
+        }
+
+        var userName = GetURLParameter('user');
+
+        // Function to handle rating
+        function setRating(star, rating) {
+            let stars = star.parentElement.querySelectorAll('.star');
+            stars.forEach((s, index) => {
+                if (index < rating) {
+                    s.classList.add('selected');
+                } else {
+                    s.classList.remove('selected');
+                }
+            });
+        }
+
+        // Function to open modals
+        function openModal(type, therapist, patient) {
+            if (type === 'therapyPlan') {
+                document.getElementById('modalTherapist').textContent = therapist;
+                document.getElementById('modalPatient').textContent = patient;
+                document.getElementById('therapyPlanModal').style.display = 'flex';
+            } else if (type === 'goals') {
+                document.getElementById('modalTherapistGoals').textContent = therapist;
+                document.getElementById('modalPatientGoals').textContent = patient;
+                document.getElementById('goalsModal').style.display = 'flex';
+            }
+        }
+
+        // Function to close modals
+        function closeModal() {
+            document.getElementById('therapyPlanModal').style.display = 'none';
+            document.getElementById('goalsModal').style.display = 'none';
+        }
+
+
+        document.getElementById('sendButton').addEventListener('click', chatbot);
+        document.addEventListener('keydown', function (event) {
+            if (event.key == 'Enter') {
+
+                document.getElementById('sendButton').click();
+            };
+        });
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            document.querySelector('.chatbot-container').style.display = 'none';
+        });
+
+        function appendMessage(sender, message) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            document.getElementById('chatbotContent').appendChild(messageElement);
+            const chatbox = document.getElementById('chatbotContent');
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to the bottom
+        }
+
+        const apiUrl = 'http://localhost:3000/therapists';
+
+        // Fetch therapists and their patients
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const therapistList = document.getElementById('therapistList');
+
+                var theraName = '';
+
+                data.forEach(therapist => {
+                    //if(theraName != therapist.therapistName){
+                    if (theraName.indexOf(therapist.therapistName) == -1) {
+
+                        const therapistCard = document.createElement('div');
+                        therapistCard.className = 'therapist-card';
+
+                        const therapistName = document.createElement('h2');
+                        therapistName.textContent = therapist.therapistName; // Assuming therapist object has a name property
+                        therapistCard.appendChild(therapistName);
+
+                        const patientList = document.createElement('div');
+                        patientList.className = 'patient-list';
+                        patientList.innerHTML = '<p>Patients:</p><ul></ul>';
+                        const patientUl = patientList.querySelector('ul');
+
+                        let patients;
+                        let reviewText;
+                        fetch(apiUrl + '?therapistName=' + therapist.therapistName)
+                            .then(response => response.json())
+                            .then(data1 => {
+                                data1.forEach(patient => {
+                                    //alert('http://localhost:3000/feedback?therapistName='+therapist.therapistName+'&patientName='+patient.patientName);
+                                fetch('http://localhost:3000/feedback?therapistName='+therapist.therapistName+'&patientName='+patient.patientName)
+                                .then(response1 => response1.json())
+                                .then(data2 => {
+                                    data2.forEach(record => {
+                                        reviewText = record.feedback;
+                                        document.getElementById('reviewText_'+patient.patientName).value = reviewText;
+                                    });
+                                   
+                                });
+                                 const listItem = document.createElement('li');
+                                 listItem.innerHTML = `
+                    <strong>${patient.patientName}</strong>
+                    <div class="buttons">
+                        <button onclick="openModal('therapyPlan', '${therapist.therapistName}', '${patient.patientName}')">View Therapy Plan</button>
+                        <button onclick="openModal('goals', '${therapist.therapistName}', '${patient.patientName}')">View Goals</button>
+                    </div>
+                        
+                    <div class="review-section">
+                        <textarea id="reviewText_${patient.patientName}" placeholder="Write your review"></textarea>
+                        <div class="review-buttons">
+                            <button id="acceptBtn" onclick="acceptordeny('${therapist.therapistName}', '${patient.patientName}', 'accept')">Accept</button>
+                            <button id="denyBtn" onclick="acceptordeny('${therapist.therapistName}', '${patient.patientName}', 'deny')">Deny</button>
+                        </div>
+                    </div>
+                `;
+                               patientUl.appendChild(listItem);
+
+                          })
+
+
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+
+                        therapistCard.appendChild(patientList);
+                        therapistList.appendChild(therapistCard);
+                        theraName = theraName + ',' + therapist.therapistName;
+                    }
+                    else {
+
+                    }
+                });
+                // alert(theraName);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+                //  alert('An error occurred while fetching therapist data.');
+            });
+
+        async function getPatients(therapistName) {
+            const response = await fetch(apiUrl + '?therapistName=' + therapist.therapistName);
+            //  alert(response);
+            const patients = response.json();
+            //  alert(patients);
+            return patients;
+        }
+
+        function openModal(type, therapistName, patientName) {
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+
+
+            // Set title and text based on the type of modal
+            if (type === 'therapyPlan') {
+                modalTitle.textContent = 'Therapy Plan';
+                modalText.value = '';
+                fetch('http://localhost:3000/therapy_plans?therapistName=' + therapistName + '&patientName=' + patientName)
+                    .then(response => response.json())
+                    .then(data1 => {
+                        data1.forEach(patient => {
+                            modalTitle.textContent = 'Therapy Plan for ' + patient.patientName;
+                            modalText.value = patient.therapyPlan;
+                        })
+                    });
+
+
+            } else if (type === 'goals') {
+                modalTitle.textContent = 'Goals';
+                modalText.value = '';
+                fetch('http://localhost:3000/therapy_goals?therapistName=' + therapistName + '&patientName=' + patientName)
+                    .then(response => response.json())
+                    .then(data1 => {
+                        data1.forEach(patient => {
+                            modalTitle.textContent = 'Goals for' + patient.patientName;
+                            modalText.value = patient.plan;
+                        })
+                    });
+
+
+            }
+
+            // Show the overlay
+            document.getElementById('overlay').style.display = 'flex';
+        }
+
+        // Close the overlay
+        document.getElementById('closeOverlayButton').onclick = function () {
+            document.getElementById('overlay').style.display = 'none'; // Hide overlay
+        };
+
+        function acceptordeny(therapistName, patientName, type){
+            var reviewText = document.getElementById("reviewText_"+patientName).value;
+            
+            var data;
+            if(type == 'accept'){
+                data = {
+                    "patientName": patientName,
+                    "therapistName": therapistName,
+                    "feedback": reviewText,
+                    "action": 'accepted'
+                };
+            }else{
+                data = {
+                    "patientName": patientName,
+                    "therapistName": therapistName,
+                    "feedback": reviewText,
+                    "action": 'denied'
+                };
+            }
+
+            var api = 'http://localhost:3000/feedback';
+            fetch(api, {
+                method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+
+                    });
+            } 
+        
+    </script>
+</body>
+
+</html>

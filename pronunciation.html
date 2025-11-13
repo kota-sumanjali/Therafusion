@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Therafusion</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1517685352820-1b2b1c6e1e5e'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 20px;
+            color: white; /* Text color for better contrast */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to the left */
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 50px; /* Adjust the logo size */
+            margin-right: 10px;
+        }
+
+        h1 {
+            color: #4CAF50; /* Main title color */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        h2 {
+            color:#555 ; /* Subtitle color */
+            font-size: 18px;
+            margin: 10px 0 20px;
+        }
+
+        .image-container {
+            display: flex; /* Display images in a row */
+            justify-content: center; /* Center images */
+            gap: 20px; /* Space between images */
+            margin-bottom: 20px;
+        }
+
+        .image-container img {
+            width: 100px; /* Adjust image size */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .audio-container {
+            display: flex; /* Display audio controls in a row */
+            justify-content: center; /* Center audio controls */
+            gap: 20px; /* Space between audio controls */
+        }
+
+        audio {
+            width: 120px; /* Width of audio player */
+        }
+
+        footer {
+             /* Semi-transparent background */
+            color: #008000;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            position: relative;
+            bottom: 0; /* Stick to bottom */
+            margin-top: auto; /* Push footer to the bottom */
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        footer a {
+            color: #4CAF50; /* Link color */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Back to Home Button */
+        .back-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            justify-content: flex-end; /* Align button to the right */
+            width: 100%; /* Full width to push button to the right */
+            margin-top: 20px; /* Add some space above the button */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\THERAfusion.png" alt="Logo" class="logo"> <!-- Replace with your logo URL -->
+        <h1>Therafusion</h1>
+    </div>
+
+    <h2>Pronunciation Exercises</h2>
+
+    <!-- First Row of Images and Audio -->
+    <div class="image-container">
+        <div>
+            <img src="https://thumbs.dreamstime.com/b/red-apple-isolated-clipping-path-19130134.jpg" alt="Apple">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\apple.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrT4Y6PNimz_BGFF8G11KJmKeh-PBTHY8v8w&s" alt="Ball">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\ball.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Ky7Mf0JsHBy6var3wHZU9tvLr4XLEfv5-A&s" alt="Zebra">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\zebraa.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://img.freepik.com/premium-vector/young-good-looking-father-holding-hand-walk-with-kid_97632-4135.jpg" alt="father">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\father.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <!-- Second Row of Images and Audio -->
+    <div class="image-container">
+        <div>
+            <img src="https://img.freepik.com/free-photo/new-york-city_649448-1679.jpg" alt="City">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\city.mp3" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://5.imimg.com/data5/SELLER/Default/2021/10/JA/WR/YY/47022212/clinical-digital-thermometer.jpg" alt="Fish">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\thermometer.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://cdn.firstcry.com/education/2022/12/09111755/Learn-about-Weather.jpg" alt="Elephant">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\weather.mpeg" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div>
+            <img src="https://t4.ftcdn.net/jpg/01/30/24/67/360_F_130246761_XVWbg4AGgGu7SlcKi2QPR23J03U710mP.jpg" alt="Giraffe">
+            <audio controls>
+                <source src="C:\Users\SAI SINDHU\OneDrive\Desktop\voices\snow.mp3" type="audio/mpeg"> <!-- Replace with your audio file -->
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    </div>
+
+    <!-- Button Container for Back to Home Button -->
+    <div class="button-container">
+        <a href="practisepage.html" class="back-button">Back to Home</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Therafusion. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        <p>Contact us: <a href="mailto:info@therafusion.com">info@therafusion.com</a></p>
+    </footer>
+
+</body>
+</html>
